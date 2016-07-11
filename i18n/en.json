@@ -1,0 +1,7 @@
+{
+	"@metadata": {
+		"authors": []
+	},
+	"cachebreaker": "Cache Breaker",
+	"cachebreaker_description": "Automatically adds cache breaking URL pieces to media."
+}
