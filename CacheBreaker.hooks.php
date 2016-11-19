@@ -22,14 +22,28 @@ class cacheBreakerHooks {
 	 * @return	boolean	true
 	 */
 	static public function onThumbnailBeforeProduceHTML(ThumbnailImage $thumbnailImage, &$attributes, &$linkAttributes) {
+		global $wgUploadPath;
+
 		$cacheHash = 'version='.md5($thumbnailImage->getFile()->getRepo()->getFileTimestamp($thumbnailImage->getStoragePath()).$thumbnailImage->getWidth().$thumbnailImage->getHeight().$thumbnailImage->getUrl());
 
 		if (!empty($attributes['src'])) {
 			$attributes['src'] = self::appendHash($attributes['src'], $cacheHash);
 		}
-		if (!empty($linkAttributes['href']) && stripos($linkAttributes['href'], $attributes['alt']) !== false) {
+		if (!empty($attributes['srcset'])) {
+			$sets = explode(', ', $attributes['srcset']);
+			if (!empty($sets)) {
+				foreach ($sets as $key => $set) {
+					list($url, $zoom) = explode(' ', $set);
+					$url = self::appendHash($url, $cacheHash);
+					$sets[$key] = $url.' '.$zoom;
+				}
+				$attributes['srcset'] = implode(', ', $sets);
+			}
+		}
+		if (!empty($linkAttributes['href']) && strpos($linkAttributes['href'], $wgUploadPath) === 0) {
 			$linkAttributes['href'] = self::appendHash($linkAttributes['href'], $cacheHash);
 		}
+
 		return true;
 	}
 
