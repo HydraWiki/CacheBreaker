@@ -1,0 +1,25 @@
+{
+	"name": "CacheBreaker",
+	"version": "2.0.0",
+	"author": "Alexia E. Smith",
+	"url": "https://github.com/HydraWiki/CacheBreaker",
+	"descriptionmsg": "cachebreaker_description",
+	"license-name": "GPL-3.0",
+	"type": "other",
+	"MessagesDirs": {
+		"CacheBreaker": [
+			"i18n"
+		]
+	},
+	"AutoloadClasses": {
+		"CacheBreakerHooks": "CacheBreaker.hooks.php"
+	},
+	"Hooks": {
+		"BeforeInitialize": "CacheBreakerHooks::onBeforeInitialize",
+		"ResourceLoaderRegisterModules": "CacheBreakerHooks::onBeforeInitialize",
+		"LinkerMakeMediaLinkFile": "CacheBreakerHooks::onLinkerMakeMediaLinkFile",
+		"ThumbnailBeforeProduceHTML": "CacheBreakerHooks::onThumbnailBeforeProduceHTML",
+		"TitleSquidURLs": "CacheBreakerHooks::onTitleSquidURLs"
+	},
+	"manifest_version": 2
+}
